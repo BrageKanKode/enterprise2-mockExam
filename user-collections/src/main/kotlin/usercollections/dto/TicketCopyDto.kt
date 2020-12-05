@@ -2,7 +2,7 @@ package usercollections.dto
 
 import io.swagger.annotations.ApiModelProperty
 
-class MovieCopyDto (
+class TicketCopyDto (
         @get:ApiModelProperty("Id of the card")
         var cardId: String? = null,
 

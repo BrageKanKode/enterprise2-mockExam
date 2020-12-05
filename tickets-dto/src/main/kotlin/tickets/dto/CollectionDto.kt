@@ -2,7 +2,7 @@ package tickets.dto
 
 class CollectionDto(
 
-        var cards: MutableList<MovieDto> = mutableListOf(),
+        var cards: MutableList<TicketDto> = mutableListOf(),
 
         var prices: MutableMap<Rarity, Int> = mutableMapOf(),
 

@@ -1,8 +1,8 @@
 package usercollections
 
-import usercollections.db.MovieCopy
+import usercollections.db.TicketCopy
 import usercollections.db.User
-import usercollections.dto.MovieCopyDto
+import usercollections.dto.TicketCopyDto
 import usercollections.dto.UserDto
 
 object DtoConverter {
@@ -16,8 +16,8 @@ object DtoConverter {
         }
     }
 
-    fun transform(cardCopy: MovieCopy) : MovieCopyDto {
-        return MovieCopyDto().apply {
+    fun transform(cardCopy: TicketCopy) : TicketCopyDto {
+        return TicketCopyDto().apply {
             cardId = cardCopy.cardId
             numberOfCopies = cardCopy.numberOfCopies
         }

@@ -14,14 +14,14 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.web.client.RestTemplate
 import usercollections.FakeData
-import usercollections.MovieService
+import usercollections.TicketService
 import usercollections.model.Collection
 
 
 @Profile("UserServiceTest")
 @Primary
 @Service
-class FakeCardService : MovieService(RestTemplate(), Resilience4JCircuitBreakerFactory()){
+class FakeCardService : TicketService(RestTemplate(), Resilience4JCircuitBreakerFactory()){
 
     override fun fetchData() {
         val dto = FakeData.getCollectionDto()

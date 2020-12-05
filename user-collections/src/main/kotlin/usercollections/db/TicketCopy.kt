@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 @Entity
-class MovieCopy(
+class TicketCopy(
 
         @get:Id @get:GeneratedValue
         var id : Long? = null,

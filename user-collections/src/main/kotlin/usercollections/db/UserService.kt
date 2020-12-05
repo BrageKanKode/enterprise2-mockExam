@@ -1,6 +1,5 @@
 package usercollections.db
 
-import org.springframework.context.annotation.Bean
 import org.springframework.data.jpa.repository.Lock
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
@@ -8,7 +7,7 @@ import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import usercollections.MovieService
+import usercollections.TicketService
 import javax.persistence.LockModeType
 
 @Repository
@@ -25,7 +24,7 @@ interface UserRepository : CrudRepository<User, String> {
 @Transactional
 class UserService(
         private val userRepository: UserRepository,
-        private val cardService: MovieService
+        private val cardService: TicketService
 ) {
 
     companion object{
@@ -94,7 +93,7 @@ class UserService(
     private fun addCard(user: User, cardId: String) {
         user.ownedCards.find { it.cardId == cardId }
                 ?.apply { numberOfCopies++ }
-                ?: MovieCopy().apply {
+                ?: TicketCopy().apply {
                     this.cardId = cardId
                     this.user = user
                     this.numberOfCopies = 1

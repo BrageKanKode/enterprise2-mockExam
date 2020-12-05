@@ -12,19 +12,19 @@ import org.springframework.web.util.UriComponentsBuilder
 import rest.WrappedResponse
 import tickets.dto.CollectionDto
 import tickets.dto.Rarity
-import usercollections.model.Movie
+import usercollections.model.Ticket
 import usercollections.model.Collection
 import javax.annotation.PostConstruct
 import kotlin.random.Random
 
 @Service
-class MovieService(
+class TicketService(
         private val client: RestTemplate,
         private val circuitBreakerFactory: Resilience4JCircuitBreakerFactory
 ) {
 
     companion object{
-        private val log = LoggerFactory.getLogger(MovieService::class.java)
+        private val log = LoggerFactory.getLogger(TicketService::class.java)
     }
 
     protected var collection: Collection? = null
@@ -32,7 +32,7 @@ class MovieService(
     @Value("\${cardServiceAddress}")
     private lateinit var cardServiceAddress: String
 
-    val cardCollection : List<Movie>
+    val cardCollection : List<Ticket>
         get() = collection?.cards ?: listOf()
 
     private val lock = Any()
@@ -102,7 +102,7 @@ class MovieService(
 
     fun millValue(cardId: String) : Int {
         verifyCollection()
-        val card : Movie = cardCollection.find { it.cardId  == cardId} ?:
+        val card : Ticket = cardCollection.find { it.cardId  == cardId} ?:
         throw IllegalArgumentException("Invalid cardId $cardId")
 
         return collection!!.millValues[card.rarity]!!
@@ -110,13 +110,13 @@ class MovieService(
 
     fun price(cardId: String) : Int {
         verifyCollection()
-        val card : Movie = cardCollection.find { it.cardId  == cardId} ?:
+        val card : Ticket = cardCollection.find { it.cardId  == cardId} ?:
         throw IllegalArgumentException("Invalid cardId $cardId")
 
         return collection!!.prices[card.rarity]!!
     }
 
-    fun getRandomSelection(n: Int) : List<Movie>{
+    fun getRandomSelection(n: Int) : List<Ticket>{
 
         if(n <= 0){
             throw IllegalArgumentException("Non-positive n: $n")
@@ -124,7 +124,7 @@ class MovieService(
 
         verifyCollection()
 
-        val selection = mutableListOf<Movie>()
+        val selection = mutableListOf<Ticket>()
 
         val probabilities = collection!!.rarityProbabilities
         val bronze = probabilities[Rarity.BRONZE]!!

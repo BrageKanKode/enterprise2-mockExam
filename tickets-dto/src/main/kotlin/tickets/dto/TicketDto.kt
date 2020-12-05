@@ -1,6 +1,6 @@
 package tickets.dto
 
-class MovieDto(
+class TicketDto(
 
         var cardId: String? = null,
 
