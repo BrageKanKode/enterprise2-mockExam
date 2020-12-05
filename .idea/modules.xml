@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/mockExam.iml" filepath="$PROJECT_DIR$/mockExam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/movies/movies.iml" filepath="$PROJECT_DIR$/movies/movies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rest-dto/rest-dto.iml" filepath="$PROJECT_DIR$/rest-dto/rest-dto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rest-exception/rest-exception.iml" filepath="$PROJECT_DIR$/rest-exception/rest-exception.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tickets-dto/tickets-dto.iml" filepath="$PROJECT_DIR$/tickets-dto/tickets-dto.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user-collections/user-collections.iml" filepath="$PROJECT_DIR$/user-collections/user-collections.iml" />
+    </modules>
+  </component>
+</project>

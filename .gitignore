@@ -1,0 +1,7 @@
+# Project exclude paths
+/movies/target/
+/rest-dto/target/
+/rest-exception/target/
+/target/
+/tickets-dto/target/
+/user-collections/target/
