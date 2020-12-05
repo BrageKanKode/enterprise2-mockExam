@@ -13,5 +13,5 @@ class UserDto (
         var cardPacks: Int? = null,
 
         @get:ApiModelProperty("List of cards owned by the host")
-        var ownedCards: MutableList<MovieCopyDto> = mutableListOf()
+        var ownedTickets: MutableList<TicketCopyDto> = mutableListOf()
 )

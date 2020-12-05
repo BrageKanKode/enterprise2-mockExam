@@ -60,7 +60,7 @@ internal class RestAPITest {
             val json = ObjectMapper().writeValueAsString(dto)
 
             wiremockServer.stubFor(
-                    WireMock.get(WireMock.urlMatching("/api/cards/collection_.*"))
+                    WireMock.get(WireMock.urlMatching("/api/tickets/collection_.*"))
                             .willReturn(WireMock.aResponse()
                                     .withStatus(200)
                                     .withHeader("Content-Type", "application/json; charset=utf-8")
@@ -75,7 +75,7 @@ internal class RestAPITest {
 
         class Initializer : ApplicationContextInitializer<ConfigurableApplicationContext> {
             override fun initialize(configurableApplicationContext: ConfigurableApplicationContext) {
-                TestPropertyValues.of("cardServiceAddress: localhost:${wiremockServer.port()}")
+                TestPropertyValues.of("ticketServiceAddress: localhost:${wiremockServer.port()}")
                         .applyTo(configurableApplicationContext.environment)
             }
         }
@@ -146,13 +146,13 @@ internal class RestAPITest {
 
         given().auth().basic(userId, "123")
                 .contentType(ContentType.JSON)
-                .body(PatchUserDto(Command.BUY_CARD, cardId))
+                .body(PatchUserDto(Command.BUY_TICKET, cardId))
                 .patch("/$userId")
                 .then()
                 .statusCode(200)
 
         val user = userService.findByIdEager(userId)!!
-        assertTrue(user.ownedCards.any { it.cardId == cardId })
+        assertTrue(user.ownedTickets.any { it.ticketId == cardId })
     }
 
 
@@ -163,7 +163,7 @@ internal class RestAPITest {
         given().auth().basic(userId, "123").put("/$userId").then().statusCode(201)
 
         val before = userService.findByIdEager(userId)!!
-        val totCards = before.ownedCards.sumBy { it.numberOfCopies }
+        val totCards = before.ownedTickets.sumBy { it.numberOfCopies }
         val totPacks = before.cardPacks
         assertTrue(totPacks > 0)
 
@@ -177,7 +177,7 @@ internal class RestAPITest {
         val after = userService.findByIdEager(userId)!!
         assertEquals(totPacks - 1, after.cardPacks)
         assertEquals(totCards + UserService.CARDS_PER_PACK,
-                after.ownedCards.sumBy { it.numberOfCopies })
+                after.ownedTickets.sumBy { it.numberOfCopies })
     }
 
 
@@ -198,19 +198,19 @@ internal class RestAPITest {
                 .statusCode(200)
 
         val between = userService.findByIdEager(userId)!!
-        val n = between.ownedCards.sumBy { it.numberOfCopies }
+        val n = between.ownedTickets.sumBy { it.numberOfCopies }
 
 
-        val cardId = between.ownedCards[0].cardId!!
+        val cardId = between.ownedTickets[0].ticketId!!
         given().auth().basic(userId, "123")
                 .contentType(ContentType.JSON)
-                .body(PatchUserDto(Command.MILL_CARD, cardId))
+                .body(PatchUserDto(Command.MILL_TICKET, cardId))
                 .patch("/$userId")
                 .then()
                 .statusCode(200)
 
         val after = userService.findByIdEager(userId)!!
         assertTrue(after.coins > coins)
-        assertEquals(n - 1, after.ownedCards.sumBy { it.numberOfCopies })
+        assertEquals(n - 1, after.ownedTickets.sumBy { it.numberOfCopies })
     }
 }

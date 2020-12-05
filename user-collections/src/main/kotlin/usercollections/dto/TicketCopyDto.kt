@@ -2,9 +2,9 @@ package usercollections.dto
 
 import io.swagger.annotations.ApiModelProperty
 
-class MovieCopyDto (
+class TicketCopyDto (
         @get:ApiModelProperty("Id of the card")
-        var cardId: String? = null,
+        var ticketId: String? = null,
 
         @get:ApiModelProperty("Number of copies of the card that the user owns")
         var numberOfCopies: Int? = null

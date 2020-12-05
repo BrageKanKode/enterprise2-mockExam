@@ -1,8 +1,8 @@
 package usercollections
 
-import usercollections.db.MovieCopy
+import usercollections.db.TicketCopy
 import usercollections.db.User
-import usercollections.dto.MovieCopyDto
+import usercollections.dto.TicketCopyDto
 import usercollections.dto.UserDto
 
 object DtoConverter {
@@ -12,14 +12,14 @@ object DtoConverter {
             userId = user.userId
             coins = user.coins
             cardPacks = user.cardPacks
-            ownedCards = user.ownedCards.map { transform(it) }.toMutableList()
+            ownedTickets = user.ownedTickets.map { transform(it) }.toMutableList()
         }
     }
 
-    fun transform(cardCopy: MovieCopy) : MovieCopyDto {
-        return MovieCopyDto().apply {
-            cardId = cardCopy.cardId
-            numberOfCopies = cardCopy.numberOfCopies
+    fun transform(ticketCopy: TicketCopy) : TicketCopyDto {
+        return TicketCopyDto().apply {
+            ticketId = ticketCopy.ticketId
+            numberOfCopies = ticketCopy.numberOfCopies
         }
     }
 }

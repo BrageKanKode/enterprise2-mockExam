@@ -1,6 +1,5 @@
 package usercollections.db
 
-import org.springframework.context.annotation.Bean
 import org.springframework.data.jpa.repository.Lock
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
@@ -8,7 +7,7 @@ import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import usercollections.MovieService
+import usercollections.TicketService
 import javax.persistence.LockModeType
 
 @Repository
@@ -25,7 +24,7 @@ interface UserRepository : CrudRepository<User, String> {
 @Transactional
 class UserService(
         private val userRepository: UserRepository,
-        private val cardService: MovieService
+        private val ticketService: TicketService
 ) {
 
     companion object{
@@ -36,7 +35,7 @@ class UserService(
 
         val user = userRepository.findById(userId).orElse(null)
         if(user != null){
-            user.ownedCards.size
+            user.ownedTickets.size
         }
         return user
     }
@@ -55,13 +54,13 @@ class UserService(
         return true
     }
 
-    private fun validateCard(cardId: String) {
-        if (!cardService.isInitialized()) {
-            throw IllegalStateException("Card service is not initialized")
+    private fun validateTicket(ticketId: String) {
+        if (!ticketService.isInitialized()) {
+            throw IllegalStateException("Ticket service is not initialized")
         }
 
-        if (!cardService.cardCollection.any { it.cardId == cardId }) {
-            throw IllegalArgumentException("Invalid cardId: $cardId")
+        if (!ticketService.ticketCollection.any { it.ticketId == ticketId }) {
+            throw IllegalArgumentException("Invalid ticketId: $ticketId")
         }
     }
 
@@ -71,15 +70,15 @@ class UserService(
         }
     }
 
-    private fun validate(userId: String, cardId: String) {
+    private fun validate(userId: String, ticketId: String) {
         validateUser(userId)
-        validateCard(cardId)
+        validateTicket(ticketId)
     }
 
-    fun buyCard(userId: String, cardId: String) {
-        validate(userId, cardId)
+    fun buyTicket(userId: String, ticketId: String) {
+        validate(userId, ticketId)
 
-        val price = cardService.price(cardId)
+        val price = ticketService.price(ticketId)
         val user = userRepository.lockedFind(userId)!!
 
         if (user.coins < price) {
@@ -88,32 +87,32 @@ class UserService(
 
         user.coins -= price
 
-        addCard(user, cardId)
+        addTicket(user, ticketId)
     }
 
-    private fun addCard(user: User, cardId: String) {
-        user.ownedCards.find { it.cardId == cardId }
+    private fun addTicket(user: User, ticketId: String) {
+        user.ownedTickets.find { it.ticketId == ticketId }
                 ?.apply { numberOfCopies++ }
-                ?: MovieCopy().apply {
-                    this.cardId = cardId
+                ?: TicketCopy().apply {
+                    this.ticketId = ticketId
                     this.user = user
                     this.numberOfCopies = 1
-                }.also { user.ownedCards.add(it) }
+                }.also { user.ownedTickets.add(it) }
     }
 
-    fun millCard(userId: String, cardId: String) {
-        validate(userId, cardId)
+    fun millTicket(userId: String, ticketId: String) {
+        validate(userId, ticketId)
 
         val user = userRepository.lockedFind(userId)!!
 
-        val copy = user.ownedCards.find { it.cardId == cardId }
+        val copy = user.ownedTickets.find { it.ticketId == ticketId }
         if(copy == null || copy.numberOfCopies == 0){
-            throw IllegalArgumentException("User $userId does not own a copy of $cardId")
+            throw IllegalArgumentException("User $userId does not own a copy of $ticketId")
         }
 
         copy.numberOfCopies--
 
-        val millValue = cardService.millValue(cardId)
+        val millValue = ticketService.millValue(ticketId)
         user.coins += millValue
     }
 
@@ -129,13 +128,13 @@ class UserService(
 
         user.cardPacks--
 
-        val selection = cardService.getRandomSelection(CARDS_PER_PACK)
+        val selection = ticketService.getRandomSelection(CARDS_PER_PACK)
 
         val ids = mutableListOf<String>()
 
         selection.forEach {
-            addCard(user, it.cardId)
-            ids.add(it.cardId)
+            addTicket(user, it.ticketId)
+            ids.add(it.ticketId)
         }
 
         return ids

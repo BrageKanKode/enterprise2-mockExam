@@ -1,8 +1,8 @@
 package tickets.dto
 
-class MovieDto(
+class TicketDto(
 
-        var cardId: String? = null,
+        var ticketId: String? = null,
 
         var name: String? = null,
 
