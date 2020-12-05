@@ -19,7 +19,7 @@ class TicketCopy(
         var user : User? = null,
 
         @get:NotBlank
-        var cardId: String? = null,
+        var ticketId: String? = null,
 
         @get:Min(0)
         var numberOfCopies : Int = 0

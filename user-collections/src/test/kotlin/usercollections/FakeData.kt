@@ -18,17 +18,17 @@ object FakeData {
         dto.prices.forEach { dto.millValues[it.key] = it.value / 4 }
         dto.prices.keys.forEach { dto.rarityProbabilities[it] = 0.25 }
 
-        dto.cards.run {
-            add(TicketDto(cardId = "c00", rarity = BRONZE))
-            add(TicketDto(cardId = "c01", rarity = BRONZE))
-            add(TicketDto(cardId = "c02", rarity = BRONZE))
-            add(TicketDto(cardId = "c03", rarity = BRONZE))
-            add(TicketDto(cardId = "c04", rarity = SILVER))
-            add(TicketDto(cardId = "c05", rarity = SILVER))
-            add(TicketDto(cardId = "c06", rarity = SILVER))
-            add(TicketDto(cardId = "c07", rarity = GOLD))
-            add(TicketDto(cardId = "c08", rarity = GOLD))
-            add(TicketDto(cardId = "c09", rarity = PINK_DIAMOND))
+        dto.tickets.run {
+            add(TicketDto(ticketId = "c00", rarity = BRONZE))
+            add(TicketDto(ticketId = "c01", rarity = BRONZE))
+            add(TicketDto(ticketId = "c02", rarity = BRONZE))
+            add(TicketDto(ticketId = "c03", rarity = BRONZE))
+            add(TicketDto(ticketId = "c04", rarity = SILVER))
+            add(TicketDto(ticketId = "c05", rarity = SILVER))
+            add(TicketDto(ticketId = "c06", rarity = SILVER))
+            add(TicketDto(ticketId = "c07", rarity = GOLD))
+            add(TicketDto(ticketId = "c08", rarity = GOLD))
+            add(TicketDto(ticketId = "c09", rarity = PINK_DIAMOND))
         }
 
         return dto

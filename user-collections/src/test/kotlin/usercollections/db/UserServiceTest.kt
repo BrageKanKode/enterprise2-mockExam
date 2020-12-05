@@ -21,7 +21,7 @@ import usercollections.model.Collection
 @Profile("UserServiceTest")
 @Primary
 @Service
-class FakeCardService : TicketService(RestTemplate(), Resilience4JCircuitBreakerFactory()){
+class FakeTicketService : TicketService(RestTemplate(), Resilience4JCircuitBreakerFactory()){
 
     override fun fetchData() {
         val dto = FakeData.getCollectionDto()
@@ -69,10 +69,10 @@ internal class UserServiceTest{
         val cardId = "c00"
 
         userService.registerNewUser(userId)
-        userService.buyCard(userId, cardId)
+        userService.buyTicket(userId, cardId)
 
         val user = userService.findByIdEager(userId)!!
-        assertTrue(user.ownedCards.any { it.cardId == cardId})
+        assertTrue(user.ownedTickets.any { it.ticketId == cardId})
     }
 
     @Test
@@ -83,7 +83,7 @@ internal class UserServiceTest{
         userService.registerNewUser(userId)
 
         val e = assertThrows(IllegalArgumentException::class.java){
-            userService.buyCard(userId, cardId)
+            userService.buyTicket(userId, cardId)
         }
         assertTrue(e.message!!.contains("coin"), "Wrong error message: ${e.message}")
     }
@@ -96,7 +96,7 @@ internal class UserServiceTest{
         userService.registerNewUser(userId)
 
         val before = userService.findByIdEager(userId)!!
-        val totCards = before.ownedCards.sumBy { it.numberOfCopies }
+        val totCards = before.ownedTickets.sumBy { it.numberOfCopies }
         val totPacks = before.cardPacks
         assertTrue(totPacks > 0)
 
@@ -106,7 +106,7 @@ internal class UserServiceTest{
         val after = userService.findByIdEager(userId)!!
         assertEquals(totPacks - 1, after.cardPacks)
         assertEquals(totCards + UserService.CARDS_PER_PACK,
-                after.ownedCards.sumBy { it.numberOfCopies }  )
+                after.ownedTickets.sumBy { it.numberOfCopies }  )
     }
 
     @Test
@@ -142,12 +142,12 @@ internal class UserServiceTest{
         userService.openPack(userId)
 
         val between = userService.findByIdEager(userId)!!
-        val n = between.ownedCards.sumBy { it.numberOfCopies }
-        userService.millCard(userId, between.ownedCards[0].cardId!!)
+        val n = between.ownedTickets.sumBy { it.numberOfCopies }
+        userService.millTicket(userId, between.ownedTickets[0].ticketId!!)
 
 
         val after = userService.findByIdEager(userId)!!
         assertTrue(after.coins > coins)
-        assertEquals(n-1, after.ownedCards.sumBy { it.numberOfCopies })
+        assertEquals(n-1, after.ownedTickets.sumBy { it.numberOfCopies })
     }
 }

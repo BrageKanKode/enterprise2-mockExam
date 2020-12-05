@@ -12,14 +12,14 @@ object DtoConverter {
             userId = user.userId
             coins = user.coins
             cardPacks = user.cardPacks
-            ownedCards = user.ownedCards.map { transform(it) }.toMutableList()
+            ownedTickets = user.ownedTickets.map { transform(it) }.toMutableList()
         }
     }
 
-    fun transform(cardCopy: TicketCopy) : TicketCopyDto {
+    fun transform(ticketCopy: TicketCopy) : TicketCopyDto {
         return TicketCopyDto().apply {
-            cardId = cardCopy.cardId
-            numberOfCopies = cardCopy.numberOfCopies
+            ticketId = ticketCopy.ticketId
+            numberOfCopies = ticketCopy.numberOfCopies
         }
     }
 }

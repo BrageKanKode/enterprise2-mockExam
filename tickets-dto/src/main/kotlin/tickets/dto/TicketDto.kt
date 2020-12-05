@@ -2,7 +2,7 @@ package tickets.dto
 
 class TicketDto(
 
-        var cardId: String? = null,
+        var ticketId: String? = null,
 
         var name: String? = null,
 

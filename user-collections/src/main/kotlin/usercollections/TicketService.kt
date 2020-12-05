@@ -29,11 +29,11 @@ class TicketService(
 
     protected var collection: Collection? = null
 
-    @Value("\${cardServiceAddress}")
-    private lateinit var cardServiceAddress: String
+    @Value("\${ticketServiceAddress}")
+    private lateinit var ticketServiceAddress: String
 
-    val cardCollection : List<Ticket>
-        get() = collection?.cards ?: listOf()
+    val ticketCollection : List<Ticket>
+        get() = collection?.tickets ?: listOf()
 
     private val lock = Any()
 
@@ -46,20 +46,20 @@ class TicketService(
         cb = circuitBreakerFactory.create("circuitBreakerToCards")
 
         synchronized(lock){
-            if(cardCollection.isNotEmpty()){
+            if(ticketCollection.isNotEmpty()){
                 return
             }
             fetchData()
         }
     }
 
-    fun isInitialized() = cardCollection.isNotEmpty()
+    fun isInitialized() = ticketCollection.isNotEmpty()
 
     protected fun fetchData(){
 
         val version = "v1_000"
         val uri = UriComponentsBuilder
-                .fromUriString("http://${cardServiceAddress.trim()}/api/cards/collection_$version")
+                .fromUriString("http://${ticketServiceAddress.trim()}/api/tickets/collection_$version")
                 .build().toUri()
 
         val response = cb.run(
@@ -71,21 +71,21 @@ class TicketService(
                             object : ParameterizedTypeReference<WrappedResponse<CollectionDto>>() {})
                 },
                 { e ->
-                    log.error("Failed to fetch data from Card Service: ${e.message}")
+                    log.error("Failed to fetch data from Ticket Service: ${e.message}")
                     null
                 }
         ) ?: return
 
 
         if (response.statusCodeValue != 200) {
-            log.error("Error in fetching data from Card Service. Status ${response.statusCodeValue}." +
+            log.error("Error in fetching data from Ticket Service. Status ${response.statusCodeValue}." +
                     "Message: " + response.body.message)
         }
 
         try {
             collection = Collection(response.body.data!!)
         } catch (e: Exception) {
-            log.error("Failed to parse card collection info: ${e.message}")
+            log.error("Failed to parse ticket collection info: ${e.message}")
         }
     }
 
@@ -100,20 +100,20 @@ class TicketService(
         }
     }
 
-    fun millValue(cardId: String) : Int {
+    fun millValue(ticketId: String) : Int {
         verifyCollection()
-        val card : Ticket = cardCollection.find { it.cardId  == cardId} ?:
-        throw IllegalArgumentException("Invalid cardId $cardId")
+        val ticket : Ticket = ticketCollection.find { it.ticketId  == ticketId} ?:
+        throw IllegalArgumentException("Invalid cardId $ticketId")
 
-        return collection!!.millValues[card.rarity]!!
+        return collection!!.millValues[ticket.rarity]!!
     }
 
-    fun price(cardId: String) : Int {
+    fun price(ticketId: String) : Int {
         verifyCollection()
-        val card : Ticket = cardCollection.find { it.cardId  == cardId} ?:
-        throw IllegalArgumentException("Invalid cardId $cardId")
+        val ticket : Ticket = ticketCollection.find { it.ticketId  == ticketId} ?:
+        throw IllegalArgumentException("Invalid cardId $ticketId")
 
-        return collection!!.prices[card.rarity]!!
+        return collection!!.prices[ticket.rarity]!!
     }
 
     fun getRandomSelection(n: Int) : List<Ticket>{
@@ -141,8 +141,8 @@ class TicketService(
                 p > bronze + silver + gold -> Rarity.PINK_DIAMOND
                 else -> throw IllegalStateException("BUG for p=$p")
             }
-            val card = collection!!.cardsByRarity[r].let{ it!![Random.nextInt(it.size)] }
-            selection.add(card)
+            val ticket = collection!!.cardsByRarity[r].let{ it!![Random.nextInt(it.size)] }
+            selection.add(ticket)
         }
 
         return selection

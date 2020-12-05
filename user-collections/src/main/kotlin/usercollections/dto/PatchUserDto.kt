@@ -4,8 +4,8 @@ import io.swagger.annotations.ApiModelProperty
 
 enum class Command {
     OPEN_PACK,
-    MILL_CARD,
-    BUY_CARD
+    MILL_TICKET,
+    BUY_TICKET
 }
 
 data class PatchUserDto(
@@ -14,5 +14,5 @@ data class PatchUserDto(
         var command: Command? = null,
 
         @get:ApiModelProperty("Optional card id, if the command requires one")
-        var cardId: String? = null
+        var ticketId: String? = null
 )

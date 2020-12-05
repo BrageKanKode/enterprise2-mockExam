@@ -14,7 +14,7 @@ import usercollections.dto.PatchUserDto
 import usercollections.dto.UserDto
 import java.lang.IllegalArgumentException
 
-@Api(value = "/api/user-collections", description = "Operations on card collections owned by users")
+@Api(value = "/api/user-collections", description = "Operations on ticket collections owned by users")
 @RequestMapping(
         path = ["/api/user-collections"],
         produces = [(MediaType.APPLICATION_JSON_VALUE)]
@@ -24,7 +24,7 @@ class RestAPI(
         private val userService: UserService
 ) {
 
-    @ApiOperation("Retrieve card collection information for a specific user")
+    @ApiOperation("Retrieve ticket collection information for a specific user")
     @GetMapping(path = ["/{userId}"])
     fun getUserInfo(
             @PathVariable("userId") userId: String
@@ -48,7 +48,7 @@ class RestAPI(
         else RestResponseFactory.noPayload(201)
     }
 
-    @ApiOperation("Execute a command on a user's collection, like for example buying/milling cards")
+    @ApiOperation("Execute a command on a user's collection, like for example buying/milling tickets")
     @PatchMapping(
             path = ["/{userId}"],
             consumes = [(MediaType.APPLICATION_JSON_VALUE)]
@@ -68,26 +68,26 @@ class RestAPI(
             } catch (e: IllegalArgumentException){
                 return RestResponseFactory.userFailure(e.message ?: "Failed to open pack")
             }
-            return RestResponseFactory.payload(200, PatchResultDto().apply { cardIdsInOpenedPack.addAll(ids) })
+            return RestResponseFactory.payload(200, PatchResultDto().apply { ticketIdsInOpenedPack.addAll(ids) })
         }
 
-        val cardId = dto.cardId
-                ?: return RestResponseFactory.userFailure("Missing card id")
+        val ticketId = dto.ticketId
+                ?: return RestResponseFactory.userFailure("Missing ticket id")
 
-        if(dto.command == Command.BUY_CARD){
+        if(dto.command == Command.BUY_TICKET){
             try{
-                userService.buyCard(userId, cardId)
+                userService.buyTicket(userId, ticketId)
             } catch (e: IllegalArgumentException){
-                return RestResponseFactory.userFailure(e.message ?: "Failed to buy card $cardId")
+                return RestResponseFactory.userFailure(e.message ?: "Failed to buy ticket $ticketId")
             }
             return RestResponseFactory.payload(200, PatchResultDto())
         }
 
-        if(dto.command == Command.MILL_CARD){
+        if(dto.command == Command.MILL_TICKET){
             try{
-                userService.millCard(userId, cardId)
+                userService.millTicket(userId, ticketId)
             } catch (e: IllegalArgumentException){
-                return RestResponseFactory.userFailure(e.message ?: "Failed to mill card $cardId")
+                return RestResponseFactory.userFailure(e.message ?: "Failed to mill ticket $ticketId")
             }
             return RestResponseFactory.payload(200, PatchResultDto())
         }
