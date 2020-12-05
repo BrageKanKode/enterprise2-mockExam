@@ -15,8 +15,8 @@ class User(
         @get:Min(0)
         var coins: Int = 0,
 
-        @get:Min(0)
-        var cardPacks: Int = 0,
+//        @get:Min(0)
+//        var cardPacks: Int = 0,
 
         @get:OneToMany(mappedBy = "user", cascade = [(CascadeType.ALL)])
         var ownedTickets : MutableList<TicketCopy> = mutableListOf()

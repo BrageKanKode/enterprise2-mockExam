@@ -10,7 +10,7 @@ data class Collection(
 
         val prices: Map<Rarity, Int>,
 
-        val millValues: Map<Rarity, Int>,
+//        val millValues: Map<Rarity, Int>,
 
         val rarityProbabilities: Map<Rarity, Double>
 ){
@@ -18,7 +18,7 @@ data class Collection(
     constructor(dto: CollectionDto) : this(
             dto.tickets.map { Ticket(it) },
             dto.prices.toMap(),
-            dto.millValues.toMap(),
+//            dto.millValues.toMap(),
             dto.rarityProbabilities.toMap()
     )
 
@@ -30,7 +30,7 @@ data class Collection(
         }
         Rarity.values().forEach {
             requireNotNull(prices[it])
-            requireNotNull(millValues[it])
+//            requireNotNull(millValues[it])
             requireNotNull(rarityProbabilities[it])
         }
 

@@ -89,65 +89,65 @@ internal class UserServiceTest{
     }
 
 
-    @Test
-    fun testOpenPack(){
+//    @Test
+//    fun testOpenPack(){
+//
+//        val userId = "foo"
+//        userService.registerNewUser(userId)
+//
+//        val before = userService.findByIdEager(userId)!!
+//        val totCards = before.ownedTickets.sumBy { it.numberOfCopies }
+//        val totPacks = before.cardPacks
+//        assertTrue(totPacks > 0)
+//
+//        val n = userService.openPack(userId).size
+//        assertEquals(UserService.CARDS_PER_PACK, n)
+//
+//        val after = userService.findByIdEager(userId)!!
+//        assertEquals(totPacks - 1, after.cardPacks)
+//        assertEquals(totCards + UserService.CARDS_PER_PACK,
+//                after.ownedTickets.sumBy { it.numberOfCopies }  )
+//    }
 
-        val userId = "foo"
-        userService.registerNewUser(userId)
+//    @Test
+//    fun testOpenPackFail(){
+//
+//        val userId = "foo"
+//        userService.registerNewUser(userId)
+//
+//        val before = userService.findByIdEager(userId)!!
+//        val totPacks = before.cardPacks
+//
+//        repeat(totPacks){
+//            userService.openPack(userId)
+//        }
+//
+//        val after = userService.findByIdEager(userId)!!
+//        assertEquals(0, after.cardPacks)
+//
+//        assertThrows(IllegalArgumentException::class.java){
+//            userService.openPack(userId)
+//        }
+//    }
 
-        val before = userService.findByIdEager(userId)!!
-        val totCards = before.ownedTickets.sumBy { it.numberOfCopies }
-        val totPacks = before.cardPacks
-        assertTrue(totPacks > 0)
-
-        val n = userService.openPack(userId).size
-        assertEquals(UserService.CARDS_PER_PACK, n)
-
-        val after = userService.findByIdEager(userId)!!
-        assertEquals(totPacks - 1, after.cardPacks)
-        assertEquals(totCards + UserService.CARDS_PER_PACK,
-                after.ownedTickets.sumBy { it.numberOfCopies }  )
-    }
-
-    @Test
-    fun testOpenPackFail(){
-
-        val userId = "foo"
-        userService.registerNewUser(userId)
-
-        val before = userService.findByIdEager(userId)!!
-        val totPacks = before.cardPacks
-
-        repeat(totPacks){
-            userService.openPack(userId)
-        }
-
-        val after = userService.findByIdEager(userId)!!
-        assertEquals(0, after.cardPacks)
-
-        assertThrows(IllegalArgumentException::class.java){
-            userService.openPack(userId)
-        }
-    }
-
-    @Test
-    fun testMillCard(){
-
-        val userId = "foo"
-        userService.registerNewUser(userId)
-
-        val before = userRepository.findById(userId).get()
-        val coins = before.coins
-
-        userService.openPack(userId)
-
-        val between = userService.findByIdEager(userId)!!
-        val n = between.ownedTickets.sumBy { it.numberOfCopies }
-        userService.millTicket(userId, between.ownedTickets[0].ticketId!!)
-
-
-        val after = userService.findByIdEager(userId)!!
-        assertTrue(after.coins > coins)
-        assertEquals(n-1, after.ownedTickets.sumBy { it.numberOfCopies })
-    }
+//    @Test
+//    fun testMillCard(){
+//
+//        val userId = "foo"
+//        userService.registerNewUser(userId)
+//
+//        val before = userRepository.findById(userId).get()
+//        val coins = before.coins
+//
+//        userService.openPack(userId)
+//
+//        val between = userService.findByIdEager(userId)!!
+//        val n = between.ownedTickets.sumBy { it.numberOfCopies }
+//        userService.millTicket(userId, between.ownedTickets[0].ticketId!!)
+//
+//
+//        val after = userService.findByIdEager(userId)!!
+//        assertTrue(after.coins > coins)
+//        assertEquals(n-1, after.ownedTickets.sumBy { it.numberOfCopies })
+//    }
 }

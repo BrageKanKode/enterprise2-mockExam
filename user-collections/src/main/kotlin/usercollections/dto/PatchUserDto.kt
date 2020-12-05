@@ -3,7 +3,7 @@ package usercollections.dto
 import io.swagger.annotations.ApiModelProperty
 
 enum class Command {
-    OPEN_PACK,
+//    OPEN_PACK,
     MILL_TICKET,
     BUY_TICKET
 }

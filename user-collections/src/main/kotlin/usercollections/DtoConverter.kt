@@ -11,7 +11,7 @@ object DtoConverter {
         return UserDto().apply {
             userId = user.userId
             coins = user.coins
-            cardPacks = user.cardPacks
+//            cardPacks = user.cardPacks
             ownedTickets = user.ownedTickets.map { transform(it) }.toMutableList()
         }
     }

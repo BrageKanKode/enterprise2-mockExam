@@ -100,13 +100,13 @@ class TicketService(
         }
     }
 
-    fun millValue(ticketId: String) : Int {
-        verifyCollection()
-        val ticket : Ticket = ticketCollection.find { it.ticketId  == ticketId} ?:
-        throw IllegalArgumentException("Invalid cardId $ticketId")
-
-        return collection!!.millValues[ticket.rarity]!!
-    }
+//    fun millValue(ticketId: String) : Int {
+//        verifyCollection()
+//        val ticket : Ticket = ticketCollection.find { it.ticketId  == ticketId} ?:
+//        throw IllegalArgumentException("Invalid cardId $ticketId")
+//
+//        return collection!!.millValues[ticket.rarity]!!
+//    }
 
     fun price(ticketId: String) : Int {
         verifyCollection()

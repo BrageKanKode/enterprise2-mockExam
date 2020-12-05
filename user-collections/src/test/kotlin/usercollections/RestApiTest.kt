@@ -156,61 +156,61 @@ internal class RestAPITest {
     }
 
 
-    @Test
-    fun testOpenPack() {
-
-        val userId = "foo"
-        given().auth().basic(userId, "123").put("/$userId").then().statusCode(201)
-
-        val before = userService.findByIdEager(userId)!!
-        val totCards = before.ownedTickets.sumBy { it.numberOfCopies }
-        val totPacks = before.cardPacks
-        assertTrue(totPacks > 0)
-
-        given().auth().basic(userId, "123")
-                .contentType(ContentType.JSON)
-                .body(PatchUserDto(Command.OPEN_PACK))
-                .patch("/$userId")
-                .then()
-                .statusCode(200)
-
-        val after = userService.findByIdEager(userId)!!
-        assertEquals(totPacks - 1, after.cardPacks)
-        assertEquals(totCards + UserService.CARDS_PER_PACK,
-                after.ownedTickets.sumBy { it.numberOfCopies })
-    }
-
-
-    @Test
-    fun testMillCard() {
-
-        val userId = "foo"
-        given().auth().basic(userId, "123").put("/$userId").then().statusCode(201)
-
-        val before = userRepository.findById(userId).get()
-        val coins = before.coins
-
-        given().auth().basic(userId, "123")
-                .contentType(ContentType.JSON)
-                .body(PatchUserDto(Command.OPEN_PACK))
-                .patch("/$userId")
-                .then()
-                .statusCode(200)
-
-        val between = userService.findByIdEager(userId)!!
-        val n = between.ownedTickets.sumBy { it.numberOfCopies }
+//    @Test
+//    fun testOpenPack() {
+//
+//        val userId = "foo"
+//        given().auth().basic(userId, "123").put("/$userId").then().statusCode(201)
+//
+//        val before = userService.findByIdEager(userId)!!
+//        val totCards = before.ownedTickets.sumBy { it.numberOfCopies }
+//        val totPacks = before.cardPacks
+//        assertTrue(totPacks > 0)
+//
+//        given().auth().basic(userId, "123")
+//                .contentType(ContentType.JSON)
+//                .body(PatchUserDto(Command.OPEN_PACK))
+//                .patch("/$userId")
+//                .then()
+//                .statusCode(200)
+//
+//        val after = userService.findByIdEager(userId)!!
+//        assertEquals(totPacks - 1, after.cardPacks)
+//        assertEquals(totCards + UserService.CARDS_PER_PACK,
+//                after.ownedTickets.sumBy { it.numberOfCopies })
+//    }
 
 
-        val cardId = between.ownedTickets[0].ticketId!!
-        given().auth().basic(userId, "123")
-                .contentType(ContentType.JSON)
-                .body(PatchUserDto(Command.MILL_TICKET, cardId))
-                .patch("/$userId")
-                .then()
-                .statusCode(200)
-
-        val after = userService.findByIdEager(userId)!!
-        assertTrue(after.coins > coins)
-        assertEquals(n - 1, after.ownedTickets.sumBy { it.numberOfCopies })
-    }
+//    @Test
+//    fun testMillCard() {
+//
+//        val userId = "foo"
+//        given().auth().basic(userId, "123").put("/$userId").then().statusCode(201)
+//
+//        val before = userRepository.findById(userId).get()
+//        val coins = before.coins
+//
+//        given().auth().basic(userId, "123")
+//                .contentType(ContentType.JSON)
+//                .body(PatchUserDto(Command.OPEN_PACK))
+//                .patch("/$userId")
+//                .then()
+//                .statusCode(200)
+//
+//        val between = userService.findByIdEager(userId)!!
+//        val n = between.ownedTickets.sumBy { it.numberOfCopies }
+//
+//
+//        val cardId = between.ownedTickets[0].ticketId!!
+//        given().auth().basic(userId, "123")
+//                .contentType(ContentType.JSON)
+//                .body(PatchUserDto(Command.MILL_TICKET, cardId))
+//                .patch("/$userId")
+//                .then()
+//                .statusCode(200)
+//
+//        val after = userService.findByIdEager(userId)!!
+//        assertTrue(after.coins > coins)
+//        assertEquals(n - 1, after.ownedTickets.sumBy { it.numberOfCopies })
+//    }
 }

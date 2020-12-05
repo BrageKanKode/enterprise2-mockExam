@@ -48,7 +48,7 @@ class UserService(
 
         val user = User()
         user.userId = userId
-        user.cardPacks = 3
+//        user.cardPacks = 3
         user.coins = 100
         userRepository.save(user)
         return true
@@ -100,43 +100,43 @@ class UserService(
                 }.also { user.ownedTickets.add(it) }
     }
 
-    fun millTicket(userId: String, ticketId: String) {
-        validate(userId, ticketId)
+//    fun millTicket(userId: String, ticketId: String) {
+//        validate(userId, ticketId)
+//
+//        val user = userRepository.lockedFind(userId)!!
+//
+//        val copy = user.ownedTickets.find { it.ticketId == ticketId }
+//        if(copy == null || copy.numberOfCopies == 0){
+//            throw IllegalArgumentException("User $userId does not own a copy of $ticketId")
+//        }
+//
+//        copy.numberOfCopies--
+//
+//        val millValue = ticketService.millValue(ticketId)
+//        user.coins += millValue
+//    }
 
-        val user = userRepository.lockedFind(userId)!!
-
-        val copy = user.ownedTickets.find { it.ticketId == ticketId }
-        if(copy == null || copy.numberOfCopies == 0){
-            throw IllegalArgumentException("User $userId does not own a copy of $ticketId")
-        }
-
-        copy.numberOfCopies--
-
-        val millValue = ticketService.millValue(ticketId)
-        user.coins += millValue
-    }
-
-    fun openPack(userId: String) : List<String> {
-
-        validateUser(userId)
-
-        val user = userRepository.lockedFind(userId)!!
-
-        if(user.cardPacks < 1){
-            throw IllegalArgumentException("No pack to open")
-        }
-
-        user.cardPacks--
-
-        val selection = ticketService.getRandomSelection(CARDS_PER_PACK)
-
-        val ids = mutableListOf<String>()
-
-        selection.forEach {
-            addTicket(user, it.ticketId)
-            ids.add(it.ticketId)
-        }
-
-        return ids
-    }
+//    fun openPack(userId: String) : List<String> {
+//
+//        validateUser(userId)
+//
+//        val user = userRepository.lockedFind(userId)!!
+//
+//        if(user.cardPacks < 1){
+//            throw IllegalArgumentException("No pack to open")
+//        }
+//
+//        user.cardPacks--
+//
+//        val selection = ticketService.getRandomSelection(CARDS_PER_PACK)
+//
+//        val ids = mutableListOf<String>()
+//
+//        selection.forEach {
+//            addTicket(user, it.ticketId)
+//            ids.add(it.ticketId)
+//        }
+//
+//        return ids
+//    }
 }

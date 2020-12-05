@@ -62,14 +62,14 @@ class RestAPI(
             return RestResponseFactory.userFailure("Missing command")
         }
 
-        if(dto.command == Command.OPEN_PACK){
-            val ids = try {
-                userService.openPack(userId)
-            } catch (e: IllegalArgumentException){
-                return RestResponseFactory.userFailure(e.message ?: "Failed to open pack")
-            }
-            return RestResponseFactory.payload(200, PatchResultDto().apply { ticketIdsInOpenedPack.addAll(ids) })
-        }
+//        if(dto.command == Command.OPEN_PACK){
+//            val ids = try {
+//                userService.openPack(userId)
+//            } catch (e: IllegalArgumentException){
+//                return RestResponseFactory.userFailure(e.message ?: "Failed to open pack")
+//            }
+//            return RestResponseFactory.payload(200, PatchResultDto().apply { ticketIdsInOpenedPack.addAll(ids) })
+//        }
 
         val ticketId = dto.ticketId
                 ?: return RestResponseFactory.userFailure("Missing ticket id")
@@ -83,14 +83,14 @@ class RestAPI(
             return RestResponseFactory.payload(200, PatchResultDto())
         }
 
-        if(dto.command == Command.MILL_TICKET){
-            try{
-                userService.millTicket(userId, ticketId)
-            } catch (e: IllegalArgumentException){
-                return RestResponseFactory.userFailure(e.message ?: "Failed to mill ticket $ticketId")
-            }
-            return RestResponseFactory.payload(200, PatchResultDto())
-        }
+//        if(dto.command == Command.MILL_TICKET){
+//            try{
+//                userService.millTicket(userId, ticketId)
+//            } catch (e: IllegalArgumentException){
+//                return RestResponseFactory.userFailure(e.message ?: "Failed to mill ticket $ticketId")
+//            }
+//            return RestResponseFactory.payload(200, PatchResultDto())
+//        }
 
         return RestResponseFactory.userFailure("Unrecognized command: ${dto.command}")
     }
