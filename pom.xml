@@ -15,6 +15,7 @@
         <module>user-collections</module>
         <module>rooms-dto</module>
         <module>rooms</module>
+        <module>api-gateway</module>
 
     </modules>
 

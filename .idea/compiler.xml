@@ -8,13 +8,15 @@
         <outputRelativeToContentRoot value="true" />
         <module name="movies" />
         <module name="rooms-dto" />
-        <module name="rest-exception" />
         <module name="rooms" />
-        <module name="user-collections" />
         <module name="rest-dto" />
+        <module name="api-gateway" />
+        <module name="rest-exception" />
+        <module name="user-collections" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="api-gateway" target="1.5" />
       <module name="mockExam" target="1.5" />
       <module name="movies" target="1.5" />
       <module name="rest-dto" target="1.5" />

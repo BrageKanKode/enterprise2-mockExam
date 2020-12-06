@@ -11,10 +11,10 @@ services:
     depends_on:
       - discovery
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+#  frontend:
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile
 
   rabbitmq:
     image: "rabbitmq:3"
@@ -27,34 +27,34 @@ services:
   redis:
     image: "redis:latest"
 
-  postgres-auth:
-    image: "postgres:10"
-    environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
+#  postgres-auth:
+#    image: "postgres:10"
+#    environment:
+#      - POSTGRES_HOST_AUTH_METHOD=trust
 
   postgres-user-collections:
     image: "postgres:10"
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
 
-  postgres-scores:
+  postgres-movies:
     image: "postgres:10"
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
 
-  auth:
-    build:
-      context: ./auth
-      dockerfile: Dockerfile
-    depends_on:
-      - api-gateway
-      - redis
-      - postgres-auth
-      - rabbitmq
+#  auth:
+#    build:
+#      context: ./auth
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - api-gateway
+#      - redis
+#      - postgres-auth
+#      - rabbitmq
 
   cards_0:
     build:
-      context: ./cards
+      context: ./rooms
       dockerfile: Dockerfile
     depends_on:
       - api-gateway
@@ -62,7 +62,7 @@ services:
 
   cards_1:
     build:
-      context: ./cards
+      context: ./rooms
       dockerfile: Dockerfile
     depends_on:
       - api-gateway
@@ -76,17 +76,17 @@ services:
       - api-gateway
       - discovery
       - postgres-user-collections
-      - auth
+#      - auth
       - rabbitmq
 
   scores:
     build:
-      context: ./scores
+      context: ./movies
       dockerfile: Dockerfile
     depends_on:
       - api-gateway
       - discovery
-      - postgres-scores
+      - postgres-movies
       - rabbitmq
 
 
