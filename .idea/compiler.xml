@@ -9,6 +9,7 @@
         <module name="movies" />
         <module name="rooms-dto" />
         <module name="rooms" />
+        <module name="auth" />
         <module name="rest-dto" />
         <module name="api-gateway" />
         <module name="rest-exception" />
@@ -17,6 +18,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api-gateway" target="1.5" />
+      <module name="auth" target="1.5" />
       <module name="mockExam" target="1.5" />
       <module name="movies" target="1.5" />
       <module name="rest-dto" target="1.5" />

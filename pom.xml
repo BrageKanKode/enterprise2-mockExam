@@ -16,6 +16,7 @@
         <module>rooms-dto</module>
         <module>rooms</module>
         <module>api-gateway</module>
+        <module>auth</module>
 
     </modules>
 
