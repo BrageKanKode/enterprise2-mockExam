@@ -1,40 +1,40 @@
 package usercollections.model
 
-import tickets.dto.CollectionDto
-import tickets.dto.Rarity
+import rooms.dto.CollectionDto
+import rooms.dto.Rooms
 import kotlin.math.abs
 
 data class Collection(
 
         val tickets : List<Ticket>,
 
-        val prices: Map<Rarity, Int>,
+        val prices: Map<Rooms, Int>,
 
 //        val millValues: Map<Rarity, Int>,
 
-        val rarityProbabilities: Map<Rarity, Double>
+        val roomsProbabilities: Map<Rooms, Double>
 ){
 
     constructor(dto: CollectionDto) : this(
-            dto.tickets.map { Ticket(it) },
+            dto.rooms.map { Ticket(it) },
             dto.prices.toMap(),
 //            dto.millValues.toMap(),
-            dto.rarityProbabilities.toMap()
+            dto.roomsProbabilities.toMap()
     )
 
-    val cardsByRarity : Map<Rarity, List<Ticket>> = tickets.groupBy { it.rarity }
+    val cardsByRooms : Map<Rooms, List<Ticket>> = tickets.groupBy { it.rooms }
 
     init{
         if(tickets.isEmpty()){
             throw IllegalArgumentException("No cards")
         }
-        Rarity.values().forEach {
+        Rooms.values().forEach {
             requireNotNull(prices[it])
 //            requireNotNull(millValues[it])
-            requireNotNull(rarityProbabilities[it])
+            requireNotNull(roomsProbabilities[it])
         }
 
-        val p = rarityProbabilities.values.sum()
+        val p = roomsProbabilities.values.sum()
         if(abs(1 - p) > 0.00001){
             throw IllegalArgumentException("Invalid probability sum: $p")
         }

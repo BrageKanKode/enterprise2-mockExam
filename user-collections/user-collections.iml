@@ -46,6 +46,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
+          <factory-entry name="entityManagerFactory" />
           <factory-entry name="user-collections" />
         </datasource-mapping>
         <naming-strategy-map />
@@ -76,7 +77,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="tickets-dto" />
+    <orderEntry type="module" module-name="rooms-dto" />
     <orderEntry type="module" module-name="rest-dto" />
     <orderEntry type="module" module-name="rest-exception" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:28.1-jre" level="project" />

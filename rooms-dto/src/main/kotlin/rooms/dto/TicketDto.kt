@@ -1,4 +1,4 @@
-package tickets.dto
+package rooms.dto
 
 class TicketDto(
 
@@ -8,7 +8,7 @@ class TicketDto(
 
         var description: String? = null,
 
-        var rarity: Rarity? = null,
+        var rooms: Rooms? = null,
 
         var imageId: String? = null
 )

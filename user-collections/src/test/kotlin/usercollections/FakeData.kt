@@ -1,8 +1,8 @@
 package usercollections
 
-import tickets.dto.CollectionDto
-import tickets.dto.TicketDto
-import tickets.dto.Rarity.*
+import rooms.dto.CollectionDto
+import rooms.dto.TicketDto
+import rooms.dto.Rooms.*
 
 object FakeData {
 
@@ -16,19 +16,19 @@ object FakeData {
         dto.prices[PINK_DIAMOND] = 100_000
 
         dto.prices.forEach { dto.millValues[it.key] = it.value / 4 }
-        dto.prices.keys.forEach { dto.rarityProbabilities[it] = 0.25 }
+        dto.prices.keys.forEach { dto.roomsProbabilities[it] = 0.25 }
 
-        dto.tickets.run {
-            add(TicketDto(ticketId = "c00", rarity = BRONZE))
-            add(TicketDto(ticketId = "c01", rarity = BRONZE))
-            add(TicketDto(ticketId = "c02", rarity = BRONZE))
-            add(TicketDto(ticketId = "c03", rarity = BRONZE))
-            add(TicketDto(ticketId = "c04", rarity = SILVER))
-            add(TicketDto(ticketId = "c05", rarity = SILVER))
-            add(TicketDto(ticketId = "c06", rarity = SILVER))
-            add(TicketDto(ticketId = "c07", rarity = GOLD))
-            add(TicketDto(ticketId = "c08", rarity = GOLD))
-            add(TicketDto(ticketId = "c09", rarity = PINK_DIAMOND))
+        dto.rooms.run {
+            add(TicketDto(ticketId = "c00", rooms = BRONZE))
+            add(TicketDto(ticketId = "c01", rooms = BRONZE))
+            add(TicketDto(ticketId = "c02", rooms = BRONZE))
+            add(TicketDto(ticketId = "c03", rooms = BRONZE))
+            add(TicketDto(ticketId = "c04", rooms = SILVER))
+            add(TicketDto(ticketId = "c05", rooms = SILVER))
+            add(TicketDto(ticketId = "c06", rooms = SILVER))
+            add(TicketDto(ticketId = "c07", rooms = GOLD))
+            add(TicketDto(ticketId = "c08", rooms = GOLD))
+            add(TicketDto(ticketId = "c09", rooms = PINK_DIAMOND))
         }
 
         return dto

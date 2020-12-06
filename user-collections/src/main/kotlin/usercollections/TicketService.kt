@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import rest.WrappedResponse
-import tickets.dto.CollectionDto
-import tickets.dto.Rarity
+import rooms.dto.CollectionDto
+import rooms.dto.Rooms
 import usercollections.model.Ticket
 import usercollections.model.Collection
 import javax.annotation.PostConstruct
@@ -113,7 +113,7 @@ class TicketService(
         val ticket : Ticket = ticketCollection.find { it.ticketId  == ticketId} ?:
         throw IllegalArgumentException("Invalid cardId $ticketId")
 
-        return collection!!.prices[ticket.rarity]!!
+        return collection!!.prices[ticket.rooms]!!
     }
 
     fun getRandomSelection(n: Int) : List<Ticket>{
@@ -126,22 +126,22 @@ class TicketService(
 
         val selection = mutableListOf<Ticket>()
 
-        val probabilities = collection!!.rarityProbabilities
-        val bronze = probabilities[Rarity.BRONZE]!!
-        val silver = probabilities[Rarity.SILVER]!!
-        val gold = probabilities[Rarity.GOLD]!!
+        val probabilities = collection!!.roomsProbabilities
+        val bronze = probabilities[Rooms.BRONZE]!!
+        val silver = probabilities[Rooms.SILVER]!!
+        val gold = probabilities[Rooms.GOLD]!!
         //val pink = probabilities[Rarity.PINK_DIAMOND]!!
 
         repeat(n) {
             val p = Math.random()
             val r = when{
-                p <= bronze -> Rarity.BRONZE
-                p > bronze && p <= bronze + silver -> Rarity.SILVER
-                p > bronze + silver && p <= bronze + silver + gold -> Rarity.GOLD
-                p > bronze + silver + gold -> Rarity.PINK_DIAMOND
+                p <= bronze -> Rooms.BRONZE
+                p > bronze && p <= bronze + silver -> Rooms.SILVER
+                p > bronze + silver && p <= bronze + silver + gold -> Rooms.GOLD
+                p > bronze + silver + gold -> Rooms.PINK_DIAMOND
                 else -> throw IllegalStateException("BUG for p=$p")
             }
-            val ticket = collection!!.cardsByRarity[r].let{ it!![Random.nextInt(it.size)] }
+            val ticket = collection!!.cardsByRooms[r].let{ it!![Random.nextInt(it.size)] }
             selection.add(ticket)
         }
 

@@ -13,7 +13,8 @@
         <module>rest-dto</module>
         <module>rest-exception</module>
         <module>user-collections</module>
-        <module>tickets-dto</module>
+        <module>rooms-dto</module>
+        <module>rooms</module>
 
     </modules>
 

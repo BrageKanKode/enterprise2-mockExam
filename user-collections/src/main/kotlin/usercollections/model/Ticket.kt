@@ -1,15 +1,15 @@
 package usercollections.model
 
-import tickets.dto.TicketDto
-import tickets.dto.Rarity
+import rooms.dto.TicketDto
+import rooms.dto.Rooms
 
 
 data class Ticket(
         val ticketId : String,
-        val rarity: Rarity
+        val rooms: Rooms
 ){
 
     constructor(dto: TicketDto): this(
             dto.ticketId ?: throw IllegalArgumentException("Null ticketId"),
-            dto.rarity ?: throw IllegalArgumentException("Null rarity"))
+            dto.rooms ?: throw IllegalArgumentException("Null rarity"))
 }

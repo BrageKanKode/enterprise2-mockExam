@@ -1,6 +1,6 @@
-package tickets.dto
+package rooms.dto
 
-enum class Rarity {
+enum class Rooms {
 
     BRONZE,
 
