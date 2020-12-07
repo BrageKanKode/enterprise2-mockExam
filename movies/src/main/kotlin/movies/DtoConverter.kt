@@ -8,5 +8,5 @@ object DtoConverter {
     fun transform(stats: MovieStats) : MovieStatsDto =
             stats.run { MovieStatsDto(movieId, description, director, year) }
 
-    fun transform(scores: Iterable<MovieStats>) : List<MovieStatsDto> = scores.map { transform(it) }
+    fun transform(year: Iterable<MovieStats>) : List<MovieStatsDto> = year.map { transform(it) }
 }

@@ -41,7 +41,7 @@ internal class RestApiTest{
     fun testGetPage() {
 
         RestAssured.given().accept(ContentType.JSON)
-                .get("/api/scores")
+                .get("/api/movies")
                 .then()
                 .statusCode(200)
                 .body("data.list.size()", CoreMatchers.equalTo(page))
@@ -54,7 +54,7 @@ internal class RestApiTest{
         val read = mutableSetOf<String>()
 
         var page = RestAssured.given().accept(ContentType.JSON)
-                .get("/api/scores")
+                .get("/api/movies")
                 .then()
                 .statusCode(200)
                 .body("data.list.size()", CoreMatchers.equalTo(page))

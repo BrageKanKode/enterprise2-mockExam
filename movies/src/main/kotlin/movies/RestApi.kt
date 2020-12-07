@@ -15,9 +15,9 @@ import rest.RestResponseFactory
 import rest.WrappedResponse
 import java.util.concurrent.TimeUnit
 
-@Api(value = "/api/scores", description = "Scores and ranks of the players, based on their victories and defeats")
+@Api(value = "/api/movies", description = "Scores and ranks of the players, based on their victories and defeats")
 @RequestMapping(
-        path = ["/api/scores"],
+        path = ["/api/movies"],
         produces = [(MediaType.APPLICATION_JSON_VALUE)]
 )
 @RestController
@@ -28,26 +28,26 @@ class RestApi(
 
 
     @ApiOperation("Retrieve the current score statistics for the given player")
-    @GetMapping(path = ["/{userId}"])
-    fun getUserStatsInfo(
-            @PathVariable("userId") userId: String
+    @GetMapping(path = ["/{movieId}"])
+    fun getMovieStatsInfo(
+            @PathVariable("movieId") movieId: String
     ): ResponseEntity<WrappedResponse<MovieStatsDto>> {
 
-        val user = statsRepository.findById(userId).orElse(null)
-        if (user == null) {
-            return RestResponseFactory.notFound("User $userId not found")
+        val movie = statsRepository.findById(movieId).orElse(null)
+        if (movie == null) {
+            return RestResponseFactory.notFound("Movie $movieId not found")
         }
 
-        return RestResponseFactory.payload(200, DtoConverter.transform(user))
+        return RestResponseFactory.payload(200, DtoConverter.transform(movie))
     }
 
     @ApiOperation("Create default info for a new player")
-    @PutMapping(path = ["/{userId}"])
-    fun createUser(
-            @PathVariable("userId") userId: String
+    @PutMapping(path = ["/{movieId}"])
+    fun createMovie(
+            @PathVariable("movieId") movieId: String
     ): ResponseEntity<WrappedResponse<Void>> {
-        val ok = statsService.registerNewUser(userId)
-        return if (!ok) RestResponseFactory.userFailure("User $userId already exist")
+        val ok = statsService.registerNewUser(movieId)
+        return if (!ok) RestResponseFactory.userFailure("Movie $movieId already exist")
         else RestResponseFactory.noPayload(201)
     }
 
@@ -60,18 +60,18 @@ class RestApi(
             keysetId: String?,
             //
             @ApiParam("Score of the player in the previous page")
-            @RequestParam("keysetScore", required = false)
-            keysetScore: Int?): ResponseEntity<WrappedResponse<PageDto<MovieStatsDto>>> {
+            @RequestParam("keysetYear", required = false)
+            keysetYear: Int?): ResponseEntity<WrappedResponse<PageDto<MovieStatsDto>>> {
 
         val page = PageDto<MovieStatsDto>()
 
         val n = 10
-        val scores = DtoConverter.transform(statsService.getNextPage(n, keysetId, keysetScore))
-        page.list = scores
+        val year = DtoConverter.transform(statsService.getNextPage(n, keysetId, keysetYear))
+        page.list = year
 
-        if (scores.size == n) {
-            val last = scores.last()
-            page.next = "/api/scores?keysetId=${last.movieId}&keysetScore=${last.year}"
+        if (year.size == n) {
+            val last = year.last()
+            page.next = "/api/movies?keysetId=${last.movieId}&keysetYear=${last.year}"
         }
 
         return ResponseEntity

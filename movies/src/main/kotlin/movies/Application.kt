@@ -27,7 +27,7 @@ class Application {
 
     private fun apiInfo(): ApiInfo {
         return ApiInfoBuilder()
-                .title("API for Scores")
+                .title("API for Movies")
                 .description("REST service for ranking of players")
                 .version("1.0")
                 .build()
@@ -40,7 +40,7 @@ class Application {
 
     @Bean
     fun queue(): Queue {
-        return Queue("user-creation-scores")
+        return Queue("user-creation-year")
     }
 
     @Bean

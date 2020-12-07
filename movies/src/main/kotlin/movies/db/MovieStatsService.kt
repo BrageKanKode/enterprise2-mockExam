@@ -28,14 +28,14 @@ class MovieStatsService(
         return true
     }
 
-    fun getNextPage(size: Int, keysetId: String? = null, keysetScore: Int? = null): List<MovieStats>{
+    fun getNextPage(size: Int, keysetId: String? = null, keysetYear: Int? = null): List<MovieStats>{
 
         if (size < 1 || size > 1000) {
             throw IllegalArgumentException("Invalid size value: $size")
         }
 
-        if((keysetId==null && keysetScore!=null) || (keysetId!=null && keysetScore==null)){
-            throw IllegalArgumentException("keysetId and keysetScore should be both missing, or both present")
+        if((keysetId==null && keysetYear!=null) || (keysetId!=null && keysetYear==null)){
+            throw IllegalArgumentException("keysetId and keysetYear should be both missing, or both present")
         }
 
         val query: TypedQuery<MovieStats>
@@ -48,7 +48,7 @@ class MovieStatsService(
                     "select s from MovieStats s where s.year<?2 or (s.year=?2 and s.movieId<?1) order by s.year DESC, s.movieId DESC"
                     , MovieStats::class.java)
             query.setParameter(1, keysetId)
-            query.setParameter(2, keysetScore)
+            query.setParameter(2, keysetYear)
         }
         query.maxResults = size
 
