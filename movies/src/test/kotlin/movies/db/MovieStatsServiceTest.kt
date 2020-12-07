@@ -39,7 +39,7 @@ internal class UserStatsServiceTest{
         assertEquals(n, page.size)
 
         for(i in 0 until n-1){
-            assertTrue(page[i].score >= page[i+1].score)
+            assertTrue(page[i].year >= page[i+1].year)
         }
     }
 

@@ -59,7 +59,7 @@ internal class RestApiTest{
                 .statusCode(200)
                 .body("data.list.size()", CoreMatchers.equalTo(page))
                 .extract().body().jsonPath().getObject("data",object: TypeRef<PageDto<Map<String, Object>>>(){})
-        read.addAll(page.list.map { it["userId"].toString()})
+        read.addAll(page.list.map { it["movieId"].toString()})
 
         checkOrder(page)
 
@@ -69,7 +69,7 @@ internal class RestApiTest{
                     .then()
                     .statusCode(200)
                     .extract().body().jsonPath().getObject("data",object: TypeRef<PageDto<Map<String, Object>>>(){})
-            read.addAll(page.list.map { it["userId"].toString()})
+            read.addAll(page.list.map { it["movieId"].toString()})
             checkOrder(page)
         }
 
@@ -81,10 +81,10 @@ internal class RestApiTest{
 
     private fun checkOrder(page: PageDto<Map<String, Object>>) {
         for (i in 0 until page.list.size - 1) {
-            val ascore = page.list[i]["score"].toString().toInt()
-            val bscore = page.list[i + 1]["score"].toString().toInt()
-            val aid = page.list[i]["userId"].toString()
-            val bid = page.list[i + 1]["userId"].toString()
+            val ascore = page.list[i]["year"].toString().toInt()
+            val bscore = page.list[i + 1]["year"].toString().toInt()
+            val aid = page.list[i]["movieId"].toString()
+            val bid = page.list[i + 1]["movieId"].toString()
             assertTrue(ascore >= bscore)
             if (ascore == bscore) {
                 assertTrue(aid > bid)

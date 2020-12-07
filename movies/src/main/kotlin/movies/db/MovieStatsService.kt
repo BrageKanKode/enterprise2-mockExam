@@ -23,7 +23,7 @@ class MovieStatsService(
             return false
         }
 
-        val stats = MovieStats(userId, 0, 0, 0, 0)
+        val stats = MovieStats(userId, 0, 0, 0)
         repository.save(stats)
         return true
     }
@@ -41,11 +41,11 @@ class MovieStatsService(
         val query: TypedQuery<MovieStats>
         if (keysetId == null) {
             query = em.createQuery(
-                    "select s from MovieStats s order by s.score DESC, s.userId DESC"
+                    "select s from MovieStats s order by s.year DESC, s.movieId DESC"
                     , MovieStats::class.java)
         } else {
             query = em.createQuery(
-                    "select s from MovieStats s where s.score<?2 or (s.score=?2 and s.userId<?1) order by s.score DESC, s.userId DESC"
+                    "select s from MovieStats s where s.year<?2 or (s.year=?2 and s.movieId<?1) order by s.year DESC, s.movieId DESC"
                     , MovieStats::class.java)
             query.setParameter(1, keysetId)
             query.setParameter(2, keysetScore)

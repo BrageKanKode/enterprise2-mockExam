@@ -71,7 +71,7 @@ class RestApi(
 
         if (scores.size == n) {
             val last = scores.last()
-            page.next = "/api/scores?keysetId=${last.userId}&keysetScore=${last.score}"
+            page.next = "/api/scores?keysetId=${last.movieId}&keysetScore=${last.year}"
         }
 
         return ResponseEntity

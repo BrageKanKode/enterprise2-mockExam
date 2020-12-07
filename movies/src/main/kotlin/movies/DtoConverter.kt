@@ -6,7 +6,7 @@ import movies.dto.MovieStatsDto
 object DtoConverter {
 
     fun transform(stats: MovieStats) : MovieStatsDto =
-            stats.run { MovieStatsDto(userId, victories, defeats, draws, score) }
+            stats.run { MovieStatsDto(movieId, description, director, year) }
 
     fun transform(scores: Iterable<MovieStats>) : List<MovieStatsDto> = scores.map { transform(it) }
 }

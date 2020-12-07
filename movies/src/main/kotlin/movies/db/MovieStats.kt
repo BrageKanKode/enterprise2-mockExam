@@ -10,17 +10,14 @@ import javax.validation.constraints.NotNull
 class MovieStats(
 
         @get:Id @get:NotBlank
-        var userId: String? = null,
+        var movieId: String? = null,
 
         @get:Min(0) @get:NotNull
-        var victories : Int = 0,
+        var description : Int = 0,
 
         @get:Min(0) @get:NotNull
-        var defeats: Int = 0,
+        var director: Int = 0,
 
         @get:Min(0) @get:NotNull
-        var draws : Int = 0,
-
-        @get:Min(0) @get:NotNull
-        var score: Int = 0
+        var year : Int = 0
 )

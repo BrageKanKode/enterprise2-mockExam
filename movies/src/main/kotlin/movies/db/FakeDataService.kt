@@ -24,8 +24,7 @@ class FakeDataService(
         val stats = MovieStats(userId,
                 Random.nextInt(50),
                 Random.nextInt(50),
-                Random.nextInt(5),
-                Random.nextInt(30))
+                Random.nextInt(5))
         repository.save(stats)
     }
 }

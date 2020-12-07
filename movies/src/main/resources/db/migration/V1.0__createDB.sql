@@ -1,8 +1,7 @@
 
 create table movie_stats (
-    user_id varchar(255) not null,
-    defeats integer not null check (defeats>=0),
-    draws integer not null check (draws>=0),
-    score integer not null check (score>=0),
-    victories integer not null check (victories>=0),
-    primary key (user_id));
+    movie_id varchar(255) not null,
+    description integer not null check (description>=0),
+    director integer not null check (director>=0),
+    year integer not null check (year>=0),
+    primary key (movie_id));
